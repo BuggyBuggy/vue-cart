@@ -1,0 +1,31 @@
+.image {
+  height: 20vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 0;
+}
+
+.item {
+  > div {
+    margin-top: 2vh;
+  }
+}
+.controller {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &__item {
+    width: 100%;
+  }
+}
+.title {
+  height: 5vh;
+  font-weight: bold;
+}
+.teacher {
+  height: 5vh;
+}
+.el-message-box__message ul {
+  margin: 0;
+  padding-left: 15px;
+}
