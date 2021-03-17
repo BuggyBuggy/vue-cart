@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import goods from './modules/goods'
 import cart from './modules/cart'
 import createPersistedState from 'vuex-persistedstate'
-// import { getShops } from '@/api'
+import { getShops } from '@/api'
 
 Vue.use(Vuex)
 
@@ -27,10 +27,10 @@ export default new Vuex.Store({
   },
   actions: {
     fetchShops ({ commit }) {
-      // return getShops().then(res => {
-      //   // console.log('getShops', res)
-      //   commit('setShops', res.data.data)
-      // })
+      return getShops().then(res => {
+        // console.log('getShops', res)
+        commit('setShops', res.data.data)
+      })
     }
   },
   getters: {

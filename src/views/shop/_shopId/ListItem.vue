@@ -1,11 +1,11 @@
 <template lang="pug">
     el-col(:xs="24" :sm="12" :md="8" :lg="6")
       el-card( :body-style="{ position:'relative' }")
-        .image(:style="'background-image:url(' + item.g_img + ')'")
+        .image(:style="'background-image:url(' + item.img + ')'")
         .item
-          h1.name {{item.g_name}}
-          .price 單價：${{item.g_price}}
-          .nums 數量：{{item.g_nums}}
+          h1.name {{item.name}}
+          .price 單價：${{item.price}}
+          .nums 數量：{{item.nums}}
           .controller
             el-col(:span="11")
               el-input-number(size='small' :min='1' :max='restNums' v-model='nums').controller__item
@@ -34,15 +34,15 @@ export default {
     ...mapGetters('cart', ['itemIsInCart']),
     ...mapGetters('goods', ['getRestNums']),
     inCart () {
-      return this.itemIsInCart(this.item.g_id)
+      return this.itemIsInCart(this.item.gdId)
     },
     forAddtoCart () {
       let item = JSON.parse(JSON.stringify(this.item))
-      item.g_nums = this.nums
+      item.nums = this.nums
       return item
     },
     restNums () {
-      return this.getRestNums(this.item.shop_id, this.item.g_id)
+      return this.getRestNums(this.item.shop_id, this.item.gdId)
     },
     btnType () {
       return this.restNums > 0 ? 'primary' : 'info'
@@ -55,8 +55,8 @@ export default {
       if (!this.inCart) {
         this.addToCart(this.forAddtoCart)
       } else {
-        const nums = this.item.g_nums - this.restNums + this.nums
-        const updateInfo = { id: this.item.g_id, nums }
+        const nums = this.item.nums - this.restNums + this.nums
+        const updateInfo = { id: this.item.gdId, nums }
         this.updateNums(updateInfo)
       }
       this.nums = 1
@@ -64,7 +64,7 @@ export default {
     openNotify () {
       this.$notify({
         title: '成功加入購物車',
-        message: this.item.g_name + '<br> 數量：' + this.nums,
+        message: this.item.name + '<br> 數量：' + this.nums,
         dangerouslyUseHTMLString: true,
         offset: 30,
         duration: 2000

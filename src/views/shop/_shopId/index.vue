@@ -1,6 +1,6 @@
 <template lang="pug">
     el-main
-      ListItem(v-for="item in goods" :item="item" :key="item.g_id")
+      ListItem(v-for="item in goods" :item="item" :key="item.gdId")
 </template>
 
 <script>
@@ -21,6 +21,7 @@ export default {
   computed: {
     ...mapGetters('goods', ['getGoods']),
     goods () {
+      console.log(this.getGoods(this.shopId))
       return this.getGoods(this.shopId)
     }
   },

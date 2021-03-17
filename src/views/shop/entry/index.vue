@@ -1,8 +1,8 @@
 <template lang="pug">
-  main
-    .entry(v-for='shop in shops')
-      router-link(:to='{name:"list",params:{shopId: shop.shop_id }}' )
-        .entry__link(:style=' `backgroundImage:url(${shop.img})` ')
+main
+  .entry(v-for='shop in shops')
+    router-link(:to='{ name: "list", params: { shopId: shop.id } }')
+      .entry__link(:style='`backgroundImage:url(${shop.img})`')
 </template>
 
 <script>
@@ -34,16 +34,16 @@ export default {
             this.removeFromCart(idx)
             let shopName
             for (let i = 0; i < this.shops.length; i++) {
-              if (this.shops[i].shop_id === cartItem.shop_id) {
+              if (this.shops[i].id === cartItem.id) {
                 shopName = this.shops[i].name
                 break
               }
             }
             this.removeMsg.push(shopName + ' - ' + cartItem.g_name)
           }
-          console.log('this.cart', this.cart);
-          console.log('this.goods', this.goods);
-          const isOnMarket = this.goods.some(originItem => {
+          console.log('this.cart', this.cart)
+          console.log('this.goods', this.goods)
+          const isOnMarket = this.goods.some((originItem) => {
             const match = cartItem.g_id === originItem.g_id
             if (match) {
               const shortage = cartItem.g_nums > originItem.g_nums
@@ -68,7 +68,7 @@ export default {
     openRemoveMsg () {
       if (this.removeMsg.length < 1) return false
       let contentPartLi = ''
-      this.removeMsg.forEach(msg => {
+      this.removeMsg.forEach((msg) => {
         contentPartLi += `<li>${msg}</li>`
       })
       const content = `以下商品已從購物車移除：<ul>${contentPartLi}</ul>`
