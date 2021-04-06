@@ -2,7 +2,6 @@
 div(class="header" id="header" :style="detailOnly")
   div
     i(v-if='ispaySuccess')
-    i.el-icon-close(@click="closeWebview" v-else-if='isInEntry')
     i.el-icon-arrow-left(@click='goBack' v-else)
   <span> {{title}} </span>
   div(v-if="isDetailGood" @click="switchArea")
@@ -17,62 +16,51 @@ div(class="header" id="header" :style="detailOnly")
 <script>
 import { mapState } from 'vuex'
 export default {
-  data() {
+  data () {
     return {
-      title: '',
+      title: ''
     }
-  },  
+  },
   computed: {
     ...mapState('cart', ['cart']),
     countInCart () {
       return this.cart.length
     },
-    isInEntry () {
-      // return this.$route.name === 'entry'
-      // console.log('this.$route.query', this.$route.query)
-      console.log('fromLife', this.$route.query.fromLife  == 'true')
-      // return this.$route.name === 'bestChoiceLookmore' || this.$route.query.fromLife == 'true'
-      return this.$route.query.fromLife == 'true'
-    },
     ispaySuccess () {
-      return this.$route.name === 'paySuccess' 
+      return this.$route.name === 'paySuccess'
     },
     isInCart () {
       return this.$route.path.indexOf('/cart/') !== -1
     },
-    isDetailGood(){
-      // console.log(this.$route.name)
+    isDetailGood () {
+      let self = this
       switch (this.$route.name) {
         case 'GoodDetail':
-          this.title = '商品資訊'
-          break;
-
+          self.title = '商品資訊'
+          break
         case 'push_cart':
-          this.title = '商品資訊'
-          break;
-      
+          self.title = '商品資訊'
+          break
         case 'bestChoiceLookmore':
-          this.title = '分類'
-          break;
-      
+          self.title = '分類'
+          break
         case 'paySuccess':
-          this.title = '付款完成'
-          break;
-      
+          self.title = '付款完成'
+          break
         default:
-          this.title = '購物車'
-          break;
+          self.title = '購物車'
+          break
       }
-      // this.title = (this.$route.name === 'GoodDetail')? '商品資訊':'購物車'
+      return self.title
     },
-    detailOnly(){
+    detailOnly () {
       // if(this.$route.name === 'detail'){
       //   return 'position: absolute'
       // }else{
-        return 'position: fixed;'
+      return 'position: fixed;'
       // }
     },
-    cartShow(){
+    cartShow () {
       console.log(this.$route.name)
       let isShow
       switch (this.$route.name) {
@@ -80,18 +68,17 @@ export default {
         case 'detail':
         case 'payment':
           isShow = false
-          break;
-      
+          break
         default:
           isShow = true
-          break;
+          break
       }
       return isShow
     }
   },
-  created(){
-    document.title="購物車"
-  },    
+  create () {
+    document.title = '購物車'
+  },
   methods: {
     switchArea () {
       // const href = this.isInCart ? 'entry' : 'cart'
@@ -99,10 +86,7 @@ export default {
       const href = this.isInCart ? '' : 'cart'
       this.$router.push({ name: href })
     },
-    closeWebview () {
-      tapbeeCloseWebview()
-    },
-    goBack(){    
+    goBack () {
       this.$router.go(-1)
     }
   }

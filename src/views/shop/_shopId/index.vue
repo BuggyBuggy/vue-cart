@@ -21,8 +21,33 @@ export default {
   computed: {
     ...mapGetters('goods', ['getGoods']),
     goods () {
-      console.log(this.getGoods(this.shopId))
-      return this.getGoods(this.shopId)
+      const goodList = this.getGoods(this.shopId)
+      let newGoodList = []
+      let type = []
+      let lastId
+      goodList.forEach(v => {
+        type.push({
+          detail_desc: v.detail_desc,
+          detail_num: v.detail_num,
+          gdId: v.gdId
+        })
+        if (lastId !== v.id) {
+          newGoodList.push({
+            shopId: v.shop_id,
+            id: v.id,
+            name: v.name,
+            price: v.price,
+            img: v.img,
+            nums: v.nums,
+            desc: v.desc,
+            type: type
+          })
+        } else {
+          type = []
+        }
+        lastId = v.id
+      })
+      return newGoodList
     }
   },
   methods: {}
